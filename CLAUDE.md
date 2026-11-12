@@ -20,3 +20,5 @@ I dati vengono dal dataset Kaggle "thoughtvector/customer-support-on-twitter"; l
 - Prima di ogni comando, spiegare in una riga cosa fa.
 
 ## Decisioni
+- Fase 1: dataset Delta, 200 coppie (ottobre-dicembre 2017, seed 42), twcs.csv escluso da git.
+- Il file con le etichette di Bruno resta FUORI da questa cartella fino alla valutazione.
