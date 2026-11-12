@@ -1,0 +1,4 @@
+id,category,escalation,rule,confidence,draft,score,verdict,retries,final_status
+458129,6,NO,none,high,"Thank you so much for the shout-out! We're thrilled Ty could turn your travel plans around, and we'll happily pass your kudos along to Ty and the team working hard this holiday season. Safe travels!",9,PASS,0,PENDING_HUMAN_APPROVAL
+833776,4,YES,E1,high,,,,0,HUMAN
+T6,4,YES,E1,high,,,,0,HUMAN
