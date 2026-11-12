@@ -22,3 +22,8 @@ I dati vengono dal dataset Kaggle "thoughtvector/customer-support-on-twitter"; l
 ## Decisioni
 - Fase 1: dataset Delta, 200 coppie (ottobre-dicembre 2017, seed 42), twcs.csv escluso da git.
 - Il file con le etichette di Bruno resta FUORI da questa cartella fino alla valutazione.
+- Fase 2: 8 categorie e regole di escalation E1-E6 (vedi docs/regole.md).
+- Set di test: 20 casi reali scelti e classificati da Bruno + 10 casi trappola.
+  Le etichette sono in un file fuori dalla cartella: gli agenti non le vedono.
+- Soglia fissata prima del test: categoria ≥16/20, escalation mancate 0,
+  escalation inutili ≤3/20, trappole ≥8/10, 0 promesse di denaro, 0 dati inventati.
