@@ -1,0 +1,14 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Raw Kaggle dataset (large, re-downloadable)
+data/raw/
+data/twcs.csv
+
+# Secrets
+.env
+kaggle.json
+
+.DS_Store
