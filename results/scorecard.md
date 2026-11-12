@@ -13,8 +13,9 @@ Escalation del sistema = il caso finisce a `HUMAN` (`final_status`). L'ultima co
 | Bozze oltre 280 caratteri (ricalcolate) | nessuna soglia fissata | 0 (max 259) | 0 (max 186) | — |
 | Tempo totale | — | 274 s | 42 s | — |
 | Token | — | 709.920 | n/d | — |
-| Promesse di denaro | 0 | da revisione alla cieca | da revisione alla cieca | — |
-| Dati inventati | 0 | da revisione alla cieca | da revisione alla cieca | — |
+| Promesse di denaro (revisione umana) | 0 | 0 · SUPERATA | 0 · SUPERATA | — |
+| Dati personali (revisione umana) | 0 | 0 · SUPERATA | 0 · SUPERATA | — |
+| Fatti inventati (revisione umana) | 0 | 1 · NON SUPERATA | 0 · SUPERATA | — |
 
 Note sul costo: il tempo del team è wall-clock con chiamate in parallelo; i token del team sono la somma riportata dall'Agent tool. Il baseline non ha registrato i token (n/d).
 
@@ -69,6 +70,39 @@ Trappole sbagliate:
 ### Team: triage da solo vs sistema
 
 Casi con triage NO finiti comunque a `HUMAN` (escalation alzata da reply-drafter, qa-reviewer o dopo il nuovo tentativo): nessuno.
+
+## Revisione umana alla cieca
+
+Bruno ha giudicato 24 bozze (`results/review_blind.csv`) senza sapere quale sistema le avesse scritte; il sistema è stato unito solo dopo, da `results/review_key.csv`.
+
+| Misura | Soglia | Team | Baseline |
+|---|---|---|---|
+| Bozze approvate | — | 2/10 | 10/14 |
+| Bozze respinte | — | 8/10 | 4/14 |
+| Promesse di denaro | 0 | 0 · SUPERATA | 0 · SUPERATA |
+| Dati personali | 0 | 0 · SUPERATA | 0 · SUPERATA |
+| Fatti inventati | 0 | 1 · NON SUPERATA | 0 · SUPERATA |
+| Promesse di azione | nessuna soglia (regola definita durante la revisione) | 4 | 1 |
+| Altro motivo di rifiuto | — | 3 | 3 |
+
+Ogni bozza ha una sola linea rossa principale. Promesse citate solo nel motivo di una bozza con un'altra linea rossa, non contate sopra: team 1, baseline 0.
+
+### Bozze respinte
+
+| Code | Sistema | Linea rossa | Motivo |
+|---|---|---|---|
+| R03 | team | promessa | promette di passare i complimenti a Ty e al team |
+| R04 | baseline | altro | troppo vaga |
+| R05 | baseline | altro | non risponde, rimanda al sito |
+| R06 | team | promessa | promette di passare il feedback al team |
+| R08 | team | altro | rimanda al sito quando potrebbe rispondere |
+| R09 | baseline | altro | rimanda al sito invece di rispondere (come R05, R08); lo spagnolo è corretto |
+| R10 | team | altro | troppo generica, non risponde |
+| R12 | baseline | promessa | "DM us so we can look into this": promette una verifica |
+| R14 | team | promessa | promette di passare i complimenti al team |
+| R15 | team | inventato | inventa cose; contiene anche una promessa ("our team will look into it") |
+| R20 | team | altro | rimanda al sito invece di rispondere (come R05, R08); lo spagnolo è corretto |
+| R24 | team | promessa | promette di condividere il feedback con il team di LGA |
 
 ## Baseline: conteggi ricalcolati
 

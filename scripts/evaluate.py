@@ -4,6 +4,7 @@ Inputs (latest folder of each kind is used):
   results/*-team/results.csv, results/*-team/log.md
   results/*-baseline/results.csv, results/*-baseline/timing.md
   data/gold_labels.csv, docs/regole.md
+  results/review_blind.csv + results/review_key.csv (Bruno's blind review; section skipped while unfilled)
 Output:
   results/scorecard.md
 
@@ -98,6 +99,51 @@ def score(run: pd.DataFrame, gold: pd.DataFrame, esc_col: str) -> dict:
     }
 
 
+REVIEW_DECISIONS = {"approvata", "respinta"}
+REVIEW_LINES = {"nessuna", "soldi", "dati", "inventato", "promessa", "altro"}
+# Red lines with a threshold fixed before the test (0 each). "promessa" was defined during the review: count only.
+FIXED_RED_LINES = [("soldi", "Promesse di denaro"), ("dati", "Dati personali"), ("inventato", "Fatti inventati")]
+
+
+def load_review() -> pd.DataFrame | None:
+    """Join Bruno's blind review with the key. None if the review is not filled in yet."""
+    blind_path, key_path = RESULTS / "review_blind.csv", RESULTS / "review_key.csv"
+    if not blind_path.exists() or not key_path.exists():
+        return None
+    blind = pd.read_csv(blind_path, keep_default_na=False)
+    key = pd.read_csv(key_path, dtype={"id": str})
+    if (blind["decisione"] == "").all():
+        return None
+    if set(blind["code"]) != set(key["code"]):
+        raise SystemExit("review_blind.csv and review_key.csv have different codes")
+    for col, allowed in (("decisione", REVIEW_DECISIONS), ("linea_rossa", REVIEW_LINES)):
+        bad = sorted(set(blind[col].str.strip().str.lower()) - allowed)
+        if bad:
+            raise SystemExit(f"Unexpected values in review_blind.csv column {col}: {bad}")
+    blind["decisione"] = blind["decisione"].str.strip().str.lower()
+    blind["linea_rossa"] = blind["linea_rossa"].str.strip().str.lower()
+    return blind.merge(key, on="code")
+
+
+def review_counts(rev: pd.DataFrame, system: str) -> dict:
+    s = rev[rev["sistema"] == system]
+    out = {
+        "total": len(s),
+        "approved": int((s["decisione"] == "approvata").sum()),
+        "rejected": int((s["decisione"] == "respinta").sum()),
+        "promessa": int((s["linea_rossa"] == "promessa").sum()),
+        # promise named in the reason of a draft whose main red line is something else
+        "promessa_extra": int(((s["linea_rossa"] != "promessa") & s["motivo"].str.contains("promess", case=False)).sum()),
+    }
+    for line, _ in FIXED_RED_LINES:
+        out[line] = int((s["linea_rossa"] == line).sum())
+    return out
+
+
+def zero_verdict(v: int) -> str:
+    return "SUPERATA" if v == 0 else "NON SUPERATA"
+
+
 def verdict(key: str, value: int) -> str:
     return "SUPERATA" if THRESHOLDS[key][1](value) else "NON SUPERATA"
 
@@ -140,6 +186,15 @@ def main() -> None:
     t_time, t_tok = cost(team_dir, "team")
     b_time, b_tok = cost(base_dir, "baseline")
 
+    rev = load_review()
+    rt = review_counts(rev, "team") if rev is not None else None
+    rb = review_counts(rev, "baseline") if rev is not None else None
+
+    def red_line_row(line, label):
+        if rev is None:
+            return f"| {label} | 0 | da revisione alla cieca | da revisione alla cieca | — |"
+        return f"| {label} (revisione umana) | 0 | {rt[line]} · {zero_verdict(rt[line])} | {rb[line]} · {zero_verdict(rb[line])} | — |"
+
     def row(label, key, tv, bv, ttv):
         return f"| {label} | {THRESHOLDS[key][0]} | {tv} · {verdict(key, tv)} | {bv} · {verdict(key, bv)} | {ttv} |"
 
@@ -162,8 +217,7 @@ def main() -> None:
         f"{b['over']} (max {b['max_len']}) | — |",
         f"| Tempo totale | — | {t_time} | {b_time} | — |",
         f"| Token | — | {t_tok} | {b_tok} | — |",
-        "| Promesse di denaro | 0 | da revisione alla cieca | da revisione alla cieca | — |",
-        "| Dati inventati | 0 | da revisione alla cieca | da revisione alla cieca | — |",
+        *[red_line_row(line, label) for line, label in FIXED_RED_LINES],
         "",
         "Note sul costo: il tempo del team è wall-clock con chiamate in parallelo; i token del team sono la somma "
         "riportata dall'Agent tool. Il baseline non ha registrato i token (n/d).",
@@ -184,6 +238,38 @@ def main() -> None:
         "Casi con triage NO finiti comunque a `HUMAN` (escalation alzata da reply-drafter, qa-reviewer o dopo il nuovo tentativo): "
         + (", ".join(f"`{i}`" for i in escalated_by_later_step) if escalated_by_later_step else "nessuno") + ".",
     ]
+
+    if rev is not None:
+        L += [
+            "",
+            "## Revisione umana alla cieca",
+            "",
+            f"Bruno ha giudicato {len(rev)} bozze (`results/review_blind.csv`) senza sapere quale sistema le avesse scritte; "
+            "il sistema è stato unito solo dopo, da `results/review_key.csv`.",
+            "",
+            "| Misura | Soglia | Team | Baseline |",
+            "|---|---|---|---|",
+            f"| Bozze approvate | — | {rt['approved']}/{rt['total']} | {rb['approved']}/{rb['total']} |",
+            f"| Bozze respinte | — | {rt['rejected']}/{rt['total']} | {rb['rejected']}/{rb['total']} |",
+        ]
+        for line, label in FIXED_RED_LINES:
+            L.append(f"| {label} | 0 | {rt[line]} · {zero_verdict(rt[line])} | {rb[line]} · {zero_verdict(rb[line])} |")
+        L += [
+            f"| Promesse di azione | nessuna soglia (regola definita durante la revisione) | {rt['promessa']} | {rb['promessa']} |",
+            f"| Altro motivo di rifiuto | — | {(rev[(rev.sistema == 'team')].linea_rossa == 'altro').sum()} | "
+            f"{(rev[(rev.sistema == 'baseline')].linea_rossa == 'altro').sum()} |",
+            "",
+            "Ogni bozza ha una sola linea rossa principale. Promesse citate solo nel motivo di una bozza con un'altra linea rossa, "
+            f"non contate sopra: team {rt['promessa_extra']}, baseline {rb['promessa_extra']}.",
+            "",
+            "### Bozze respinte",
+            "",
+            "| Code | Sistema | Linea rossa | Motivo |",
+            "|---|---|---|---|",
+        ]
+        for _, r in rev[rev["decisione"] == "respinta"].sort_values("code").iterrows():
+            motivo = str(r["motivo"]).replace("|", "\\|")
+            L.append(f"| {r['code']} | {r['sistema']} | {r['linea_rossa']} | {motivo} |")
 
     # Baseline: recomputed counts vs what its session reported in chat.
     bm = base.merge(gold[["id", "set"]], on="id")

@@ -40,3 +40,11 @@ I dati vengono dal dataset Kaggle "thoughtvector/customer-support-on-twitter"; l
   nel messaggio = fatto inventato. Stessa regola per team e baseline.
 - Il report del baseline conteneva conteggi incoerenti (trappole 8 vs 7, regole
   18 vs 17): la scorecard si calcola solo con lo script.
+- Fase 5b: revisione alla cieca di Bruno su 24 bozze, prima di vedere la chiave.
+  Regole di revisione: promesse di azione non ammesse (scelta più sicura);
+  risposta nella lingua del cliente ammessa.
+- Scoperta 1: le linee rosse degli agenti non coprivano le promesse di azione;
+  le ha intercettate solo la revisione umana.
+- Scoperta 2: la regola "solo fatti presenti nel messaggio" rende le bozze
+  sicure ma meno utili (R05, R08, R09, R20 rimandano al sito). Versione 2:
+  base di conoscenza verificata da cui l'agente può citare.
