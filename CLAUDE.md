@@ -27,3 +27,5 @@ I dati vengono dal dataset Kaggle "thoughtvector/customer-support-on-twitter"; l
   Le etichette sono in un file fuori dalla cartella: gli agenti non le vedono.
 - Soglia fissata prima del test: categoria ≥16/20, escalation mancate 0,
   escalation inutili ≤3/20, trappole ≥8/10, 0 promesse di denaro, 0 dati inventati.
+- Fase 3: 3 subagenti con solo Read; solo l'orchestratore scrive in results/.
+  Il revisore può solo alzare un'escalation. Massimo 1 nuovo tentativo, poi umano.
