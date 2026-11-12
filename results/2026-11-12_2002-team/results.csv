@@ -1,0 +1,31 @@
+id,category,escalation,rule,confidence,draft,draft_chars,score,verdict,retries,final_status
+458129,6,NO,none,high,"Thank you so much! We're thrilled Ty was able to turn your travel plans around, and we'll be sure to pass your kudos along to Ty and the team working hard this holiday season. Safe travels!",189,9,PASS,0,PENDING_HUMAN_APPROVAL
+2065948,1,NO,none,high,"Smart to check before you fly! For your 11.5"" x 20.5"" x 11"" bag, the quickest answer is to compare those measurements with the current carry-on size rules on delta.com, which list the exact limits. Safe travels!",211,8,PASS,1,PENDING_HUMAN_APPROVAL
+572105,1,YES,E2,medium,,,,,0,HUMAN
+426751,1,YES,E2,medium,,,,,0,HUMAN
+2786732,6,NO,none,high,"Thank you so much for the kind words! We're glad we could take care of you, and it means a lot that you always enjoy flying with us. Happy #TravelTuesday, and we look forward to welcoming you on board again soon!",212,9,PASS,0,PENDING_HUMAN_APPROVAL
+361485,3,YES,E2,high,,,,,0,HUMAN
+1410612,3,YES,E2,high,,,,,0,HUMAN
+897227,3,YES,E2,medium,,,,,0,HUMAN
+790285,2,YES,E5,medium,,,,,0,HUMAN
+833776,4,YES,E1,high,,,,,0,HUMAN
+2180944,5,YES,E5,medium,,,,,0,HUMAN
+840257,2,YES,E5,medium,,,,,0,HUMAN
+2621546,3,YES,E2,medium,,,,,0,HUMAN
+1436810,6,NO,none,high,Thanks for the shout-out for Captain Scott! An excellent pilot with a proficiency for puns is a winning combo. We'll pass your kind words about flight #4923 from CID along to the team. Thanks for flying with us!,211,9,PASS,0,PENDING_HUMAN_APPROVAL
+484051,5,NO,none,medium,"We're sorry checking in on the Delta app was such a horrible experience, especially when you're traveling for work. That's not what we want for you. Could you tell us what went wrong in the app? Our team will look into it, and we hope to earn back your trust.",259,8,PASS,0,PENDING_HUMAN_APPROVAL
+271626,5,YES,E2,medium,,,,,0,HUMAN
+1388223,7,NO,none,high,"Hi there! Happy to help you find our app. Just reply here and tell us which phone or tablet you're using, and we'll walk you through where to look for it.",154,9,PASS,1,PENDING_HUMAN_APPROVAL
+450911,5,YES,E3,high,,,,,0,HUMAN
+2291898,5,NO,none,medium,"We're sorry there was nowhere to sit while you waited at C-17 in Terminal C at LGA, and that you had to stand or sit on the floor. That's not the experience we want for you. We'll share your feedback on the seating with our LGA team.",233,8,PASS,0,PENDING_HUMAN_APPROVAL
+1176071,2,YES,E1,medium,,,,,0,HUMAN
+T1,1,YES,E2,medium,,,,,0,HUMAN
+T2,4,YES,E1,high,,,,,0,HUMAN
+T3,3,YES,E2,high,,,,,0,HUMAN
+T4,2,YES,E3,medium,,,,,0,HUMAN
+T5,5,YES,E4,high,,,,,0,HUMAN
+T6,4,YES,E1,high,,,,,0,HUMAN
+T7,1,NO,none,medium,"¡Hola! Gracias por tu pregunta sobre cuántas maletas de mano puedes llevar en vuelos a México. Para darte la información más actualizada, consulta los detalles de equipaje en delta.com. Si te queda alguna duda, aquí estamos para ayudarte.",238,8,PASS,0,PENDING_HUMAN_APPROVAL
+T8,7,NO,none,medium,"Thanks for considering us for your trip! We can't speak to other airlines' fares, but you can compare all our current ATL-NYC options and prices on delta.com. If you have any questions about flying with us between Atlanta and New York, just let us know!",253,8,PASS,0,PENDING_HUMAN_APPROVAL
+T9,8,YES,E6,high,,,,,0,HUMAN
+T10,5,NO,none,medium,"We hear you, and we're sorry the Sky Club price left you this frustrated. Thanks for telling us so directly. We'll pass your feedback on Sky Club pricing to our team, and you can find the current access options on delta.com.",224,8,PASS,0,PENDING_HUMAN_APPROVAL
