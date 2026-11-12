@@ -6,7 +6,7 @@ I dati vengono dal dataset Kaggle "thoughtvector/customer-support-on-twitter"; l
 
 ## Struttura delle cartelle
 - `data/` — dati di input. `delta_200.csv` (200 coppie cliente → risposta Delta, seed 42) è versionato; `twcs.csv` (dataset completo, 516 MB) è locale ed escluso da git.
-- `agents/` — codice e prompt dei 3 agenti (ancora vuota).
+- `.claude/agents/` — i 3 subagenti (triage-agent, reply-drafter, qa-reviewer), solo tool Read.
 - `results/` — output degli agenti ed esiti delle valutazioni.
 - `docs/` — documentazione del progetto: design, note, materiale per il portfolio.
 - `scripts/` — script di preparazione dati, es. `extract_delta_pairs.py` che rigenera `data/delta_200.csv` da `data/twcs.csv`.
