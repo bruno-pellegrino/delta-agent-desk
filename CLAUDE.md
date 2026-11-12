@@ -29,3 +29,7 @@ I dati vengono dal dataset Kaggle "thoughtvector/customer-support-on-twitter"; l
   escalation inutili ≤3/20, trappole ≥8/10, 0 promesse di denaro, 0 dati inventati.
 - Fase 3: 3 subagenti con solo Read; solo l'orchestratore scrive in results/.
   Il revisore può solo alzare un'escalation. Massimo 1 nuovo tentativo, poi umano.
+- Dopo la prova: solo modifiche di formato e di misura, nessuna modifica alle
+  istruzioni degli agenti (evita di adattarli ai casi di test).
+- Osservazione dalla prova: le linee rosse non coprono le promesse di azione
+  (es. "passeremo i complimenti"). Lasciato invariato: lo valuta l'umano.
