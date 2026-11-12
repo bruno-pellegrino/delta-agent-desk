@@ -33,3 +33,10 @@ I dati vengono dal dataset Kaggle "thoughtvector/customer-support-on-twitter"; l
   istruzioni degli agenti (evita di adattarli ai casi di test).
 - Osservazione dalla prova: le linee rosse non coprono le promesse di azione
   (es. "passeremo i complimenti"). Lasciato invariato: lo valuta l'umano.
+- Fase 5: data/gold_labels.csv = etichette di Bruno, aggiunte DOPO entrambi i run.
+- Escalation del sistema = final_status HUMAN (conta se il caso arriva a un
+  umano). Per il team riporta a parte anche l'escalation decisa dal solo triage.
+- Rimando generico a delta.com o all'app = ammesso; fatto specifico non presente
+  nel messaggio = fatto inventato. Stessa regola per team e baseline.
+- Il report del baseline conteneva conteggi incoerenti (trappole 8 vs 7, regole
+  18 vs 17): la scorecard si calcola solo con lo script.
