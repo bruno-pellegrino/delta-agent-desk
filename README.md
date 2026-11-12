@@ -1,5 +1,7 @@
 # Delta Agent Desk
 
+A three-agent vs single-agent experiment in customer-care triage, with human oversight and blind evaluation.
+
 ## TL;DR
 
 - **Built:** a three-agent system (triage, reply drafter, QA reviewer) with human approval that routes and drafts replies to real Delta customer tweets.
@@ -14,6 +16,8 @@ Customer-care teams receive a stream of short public messages. Each one needs a 
 Data: the Kaggle dataset [`thoughtvector/customer-support-on-twitter`](https://www.kaggle.com/datasets/thoughtvector/customer-support-on-twitter), Delta Air Lines tweets from 2017 (the 200-pair sample in `data/delta_200.csv` spans October–December). From it I drew 40 customer tweets that open a conversation and were answered by Delta (seed 42), and picked 20 of them as the test set. I wrote 10 trap messages to probe specific risks: sarcasm, mixed praise and a money request, personal data, legal threat, disability, prompt injection, another language, a competitor question, an unintelligible message, and an angry but harmless question.
 
 The core decision is when a human is needed. Missing an escalation is treated as far more costly than an unnecessary one.
+
+Data & license: tweets from the public Kaggle dataset above, licensed under CC BY-NC-SA 4.0 (https://creativecommons.org/licenses/by-nc-sa/4.0/). The data files in `data/` and `results/` that contain tweet text are derived from it and shared under the same license. This is an independent, non-commercial portfolio project, not affiliated with Delta Air Lines.
 
 ## System
 
@@ -115,8 +119,13 @@ The full scorecard, with every wrong case and every rejected draft, is in [`resu
 - Data from 2017; policies and customer language have changed since.
 - One model for both systems; results may differ with others.
 
+## How this was built
+
+I designed the system, the escalation rules and the evaluation, labelled the test set, wrote the trap messages and did the blind review. Claude Code wrote the scripts, agent files and documentation under my direction; every number was recomputed by script. Total time: about 8 hours.
+
 ## Version 2
 
+- Test V2 on a fresh holdout set of 20 new messages: the fixes were inspired by these 30 cases, so re-testing on them would overstate the improvement.
 - Redefine overlapping categories and add a second annotator.
 - Give the baseline the same instructions as the team, so only the architecture differs.
 - A verified knowledge base the agent can quote from, so it can answer instead of deflecting to the website (drafts R05, R08, R09 and R20 were rejected for this) without inventing facts.
@@ -150,3 +159,7 @@ Recompute the scorecard from the committed run results, labels and blind review:
 ```
 
 The agent runs themselves are not scripted: they were executed in Claude Code sessions following `docs/orchestration.md` (team) and a single prompt (baseline). Their outputs are in `results/*-team/` and `results/*-baseline/`.
+
+---
+
+Bruno Pellegrino · November 2026
