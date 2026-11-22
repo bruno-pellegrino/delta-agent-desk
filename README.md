@@ -121,7 +121,7 @@ The full scorecard, with every wrong case and every rejected draft, is in [`resu
 
 ## How this was built
 
-I designed the system, the escalation rules and the evaluation, labelled the test set, wrote the trap messages and did the blind review. Claude Code wrote the scripts, agent files and documentation under my direction; every number was recomputed by script. Total time: about 8 hours.
+I chose the project and directed it end to end. Claude (chat) acted as a design partner: it proposed the structure, the categories and escalation rules, the agent specifications and the 10 trap messages, which I reviewed and adopted. I selected and labelled the 20 real test cases, did the blind review of all 24 drafts and set the stricter review rule on action promises. Claude Code wrote the scripts, agent files and documentation under my direction; every number was recomputed by script.
 
 ## Version 2
 
